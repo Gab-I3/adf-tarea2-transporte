@@ -67,7 +67,7 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> csv",
 				"source(output(",
-				"          AnioFuente as integer,",
+				"          AnioFuente as string,",
 				"          ParadaHistoricaId as string,",
 				"          CodigoPublicado as string,",
 				"          NombreParada as string,",
