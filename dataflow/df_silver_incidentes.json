@@ -15,8 +15,23 @@
 					"name": "source1"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dw_silver_incidentes_sql",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          AnioFuente as string,",
@@ -32,7 +47,68 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source1"
+				"     format: 'table') ~> source1",
+				"source1 derive(IncidenteId = upper(trim(IncidenteId)),",
+				"          TipoIncidente = upper(trim(TipoIncidente)),",
+				"          Severidad = upper(trim(Severidad))) ~> derivedColumn1",
+				"derivedColumn1 derive(FechaHoraInicio = iif(\r",
+				"    isDate(trim(FechaHoraInicio), 'dd/MM/yyyy'),\r",
+				"    toDate(trim(FechaHoraInicio), 'dd/MM/yyyy'),\r",
+				"    iif(\r",
+				"        isDate(trim(FechaHoraInicio), 'yyyy-MM-dd'),\r",
+				"        toDate(trim(FechaHoraInicio), 'yyyy-MM-dd'),\r",
+				"        toDate(null())\r",
+				"    )\r",
+				"),",
+				"          FechaHoraFin = iif(\r",
+				"    isDate(trim(FechaHoraFin), 'dd/MM/yyyy'),\r",
+				"    toDate(trim(FechaHoraFin), 'dd/MM/yyyy'),\r",
+				"    iif(\r",
+				"        isDate(trim(FechaHoraFin), 'yyyy-MM-dd'),\r",
+				"        toDate(trim(FechaHoraFin), 'yyyy-MM-dd'),\r",
+				"        toDate(null())\r",
+				"    )\r",
+				"),",
+				"          FechaHoraRegistro = iif(\r",
+				"    isDate(trim(FechaHoraRegistro), 'dd/MM/yyyy'),\r",
+				"    toDate(trim(FechaHoraRegistro), 'dd/MM/yyyy'),\r",
+				"    iif(\r",
+				"        isDate(trim(FechaHoraRegistro), 'yyyy-MM-dd'),\r",
+				"        toDate(trim(FechaHoraRegistro), 'yyyy-MM-dd'),\r",
+				"        toDate(null())\r",
+				"    )\r",
+				")) ~> derivedColumn2",
+				"derivedColumn2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          AnioFuente as integer,",
+				"          IncidenteId as string,",
+				"          TipoIncidente as string,",
+				"          Severidad as string,",
+				"          FechaHoraInicio as timestamp,",
+				"          FechaHoraFin as timestamp,",
+				"          FechaHoraRegistro as timestamp,",
+				"          VehiculoId as string,",
+				"          Descripcion as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          IncidenteId,",
+				"          TipoIncidente,",
+				"          Severidad,",
+				"          FechaHoraInicio,",
+				"          FechaHoraFin,",
+				"          FechaHoraRegistro,",
+				"          VehiculoId,",
+				"          Descripcion",
+				"     )) ~> sink1"
 			]
 		}
 	}
