@@ -87,7 +87,6 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
-				"          AnioFuente,",
 				"          VehiculoId,",
 				"          Placa,",
 				"          TipoVehiculo,",
