@@ -1,0 +1,73 @@
+{
+	"name": "dw_gold_fact_demanda_parada_sql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_dw_transporte",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "gold"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "demanda_sk",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "anio_fuente",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "demanda_id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "fecha_sk",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ruta_sk",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "parada_sk",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "franja_sk",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "validaciones_tarjeta",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "descensos",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "demanda_no_atendida",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "metodo",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "gold",
+			"table": "fact_demanda_parada"
+		}
+	}
+}

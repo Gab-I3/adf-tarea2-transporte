@@ -1,0 +1,54 @@
+{
+	"name": "dw_gold_dim_vehiculo_sql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_dw_transporte",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "gold"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "vehiculo_sk",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "vehiculo_id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "placa",
+				"type": "nvarchar"
+			},
+			{
+				"name": "tipo_vehiculo",
+				"type": "nvarchar"
+			},
+			{
+				"name": "capacidad_efectiva",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "vigencia_desde",
+				"type": "date"
+			},
+			{
+				"name": "vigencia_hasta",
+				"type": "date"
+			},
+			{
+				"name": "estado",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "gold",
+			"table": "dim_vehiculo"
+		}
+	}
+}

@@ -1,0 +1,79 @@
+{
+	"name": "dw_gold_fact_viaje_sql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_dw_transporte",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "gold"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "viaje_sk",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "anio_fuente",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "viaje_id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "fecha_sk",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ruta_sk",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "vehiculo_sk",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "hora_programada",
+				"type": "time",
+				"scale": 7
+			},
+			{
+				"name": "hora_salida",
+				"type": "time",
+				"scale": 7
+			},
+			{
+				"name": "hora_llegada",
+				"type": "time",
+				"scale": 7
+			},
+			{
+				"name": "validaciones_tarjeta",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "km_recorridos",
+				"type": "decimal",
+				"precision": 8,
+				"scale": 1
+			},
+			{
+				"name": "estado_viaje",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "gold",
+			"table": "fact_viaje"
+		}
+	}
+}

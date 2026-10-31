@@ -1,0 +1,71 @@
+{
+	"name": "dw_gold_fact_inicidente_sql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_dw_transporte",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "gold"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "incidente_sk",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "anio_fuente",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "incidente_id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "fecha_sk",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "vehiculo_sk",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "tipo_incidente",
+				"type": "nvarchar"
+			},
+			{
+				"name": "severidad",
+				"type": "nvarchar"
+			},
+			{
+				"name": "fecha_hora_inicio",
+				"type": "datetime2",
+				"scale": 0
+			},
+			{
+				"name": "fecha_hora_fin",
+				"type": "datetime2",
+				"scale": 0
+			},
+			{
+				"name": "fecha_hora_registro",
+				"type": "datetime2",
+				"scale": 0
+			},
+			{
+				"name": "descripcion",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "gold",
+			"table": "fact_incidente"
+		}
+	}
+}

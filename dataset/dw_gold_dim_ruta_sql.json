@@ -1,0 +1,57 @@
+{
+	"name": "dw_gold_dim_ruta_sql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_dw_transporte",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "gold"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ruta_sk",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ruta_historica_id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "codigo_ruta",
+				"type": "nvarchar"
+			},
+			{
+				"name": "nombre_ruta",
+				"type": "nvarchar"
+			},
+			{
+				"name": "origen",
+				"type": "nvarchar"
+			},
+			{
+				"name": "destino",
+				"type": "nvarchar"
+			},
+			{
+				"name": "vigencia_desde",
+				"type": "date"
+			},
+			{
+				"name": "vigencia_hasta",
+				"type": "date"
+			},
+			{
+				"name": "estado",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "gold",
+			"table": "dim_ruta"
+		}
+	}
+}

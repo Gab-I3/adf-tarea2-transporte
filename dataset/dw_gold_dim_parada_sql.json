@@ -1,0 +1,65 @@
+{
+	"name": "dw_gold_dim_parada_sql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_dw_transporte",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "gold"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "parada_sk",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "parada_historica_id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "codigo_publicado",
+				"type": "nvarchar"
+			},
+			{
+				"name": "nombre_parada",
+				"type": "nvarchar"
+			},
+			{
+				"name": "zona",
+				"type": "nvarchar"
+			},
+			{
+				"name": "latitud",
+				"type": "decimal",
+				"precision": 9,
+				"scale": 6
+			},
+			{
+				"name": "longitud",
+				"type": "decimal",
+				"precision": 9,
+				"scale": 6
+			},
+			{
+				"name": "vigencia_desde",
+				"type": "date"
+			},
+			{
+				"name": "vigencia_hasta",
+				"type": "date"
+			},
+			{
+				"name": "estado",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "gold",
+			"table": "dim_parada"
+		}
+	}
+}

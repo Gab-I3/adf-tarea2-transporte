@@ -30,6 +30,9 @@
 				},
 				{
 					"name": "derivedColumn2"
+				},
+				{
+					"name": "derivedColumn3"
 				}
 			],
 			"scriptLines": [
@@ -54,7 +57,8 @@
 				"derivedColumn1 derive(CapacidadEfectiva = toInteger(trim(CapacidadEfectiva)),",
 				"          VigenciaDesde = iif(instr(VigenciaDesde,'/') > 0, toDate(VigenciaDesde,'dd/MM/yyyy'), toDate(VigenciaDesde,'yyyy-MM-dd')),",
 				"          VigenciaHasta = iif(instr(VigenciaHasta,'/') > 0, toDate(VigenciaHasta,'dd/MM/yyyy'), toDate(VigenciaHasta,'yyyy-MM-dd'))) ~> derivedColumn2",
-				"derivedColumn2 sink(allowSchemaDrift: true,",
+				"derivedColumn2 derive(AnioFuente = iifNull(AnioFuente, '0')) ~> derivedColumn3",
+				"derivedColumn3 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          AnioFuente as integer,",
@@ -75,6 +79,7 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
+				"          AnioFuente,",
 				"          VehiculoId,",
 				"          Placa,",
 				"          TipoVehiculo,",
