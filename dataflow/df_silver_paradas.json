@@ -33,6 +33,9 @@
 				},
 				{
 					"name": "derivedColumn3"
+				},
+				{
+					"name": "derivedColumn4"
 				}
 			],
 			"scriptLines": [
@@ -60,7 +63,9 @@
 				"          Longitud = toDecimal(trim(Longitud))) ~> derivedColumn2",
 				"derivedColumn2 derive(VigenciaDesde = iif(instr(VigenciaDesde,'/') > 0, toDate(VigenciaDesde,'dd/MM/yyyy'), toDate(VigenciaDesde,'yyyy-MM-dd')),",
 				"          VigenciaHasta = iif(instr(VigenciaHasta,'/') > 0, toDate(VigenciaHasta,'dd/MM/yyyy'), toDate(VigenciaHasta,'yyyy-MM-dd'))) ~> derivedColumn3",
-				"derivedColumn3 sink(allowSchemaDrift: true,",
+				"derivedColumn3 derive(CodigoPublicado = iifNull(CodigoPublicado, 'Vacio'),",
+				"          AnioFuente = iifNull(AnioFuente, 'Vacio')) ~> derivedColumn4",
+				"derivedColumn4 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          AnioFuente as integer,",
