@@ -5,8 +5,6 @@
 			{
 				"name": "Data flow2",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Data flow1",
@@ -56,7 +54,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "df_silver_demanda_paradas",
+						"referenceName": "df_silver_viajes",
 						"type": "DataFlowReference"
 					},
 					"compute": {
@@ -87,7 +85,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "df_silver_incidentes",
+						"referenceName": "df_silver_rutas",
 						"type": "DataFlowReference"
 					},
 					"compute": {
@@ -118,7 +116,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "df_silver_rutas",
+						"referenceName": "df_silver_demanda_paradas",
 						"type": "DataFlowReference"
 					},
 					"compute": {
@@ -149,7 +147,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "df_silver_viajes",
+						"referenceName": "df_silver_incidentes",
 						"type": "DataFlowReference"
 					},
 					"compute": {
