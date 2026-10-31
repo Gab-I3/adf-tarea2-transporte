@@ -15,8 +15,26 @@
 					"name": "source1"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dw_silver_viajes_sql",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "derivedColumn3"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          AnioFuente as string,",
@@ -34,7 +52,81 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source1"
+				"     format: 'table') ~> source1",
+				"source1 derive(ViajeId = trim(ViajeId),",
+				"          RutaHistoricaId = trim(RutaHistoricaId),",
+				"          VehiculoId = trim(VehiculoId)) ~> derivedColumn1",
+				"derivedColumn1 derive(VehiculoId = concat(\r",
+				"    'V-',\r",
+				"    lpad(\r",
+				"        regexReplace(trim(VehiculoId), `[^0-9]`, ''),\r",
+				"        3,\r",
+				"        '0'\r",
+				"    )\r",
+				"),",
+				"          RutaHistoricaId = iif(\r",
+				"    startsWith(upper(trim(RutaHistoricaId)), 'RH-'),\r",
+				"    upper(trim(RutaHistoricaId)),\r",
+				"    concat(\r",
+				"        'R-',\r",
+				"        lpad(\r",
+				"            regexReplace(trim(RutaHistoricaId), `[^0-9]`, ''),\r",
+				"            2,\r",
+				"            '0'\r",
+				"        )\r",
+				"    )\r",
+				")\r",
+				") ~> derivedColumn2",
+				"derivedColumn2 derive(FechaServicio = toDate(trim(FechaServicio), 'dd/MM/yyyy'),",
+				"          KmRecorridos = toDecimal(\r",
+				"    replace(trim(KmRecorridos), ',', '.'),\r",
+				"    8,\r",
+				"    1\r",
+				"),",
+				"          ValidacionesTarjeta = iif(\r",
+				"    isNull(ValidacionesTarjeta) ||\r",
+				"    upper(trim(ValidacionesTarjeta)) == 'NULL',\r",
+				"    toInteger(null()),\r",
+				"    toInteger(trim(ValidacionesTarjeta))\r",
+				"),",
+				"          HoraProgramada = concat(trim(HoraProgramada), ':00'),",
+				"          HoraSalida = concat(trim(HoraSalida), ':00'),",
+				"          HoraLlegada = concat(trim(HoraLlegada), ':00')) ~> derivedColumn3",
+				"derivedColumn3 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          AnioFuente as integer,",
+				"          ViajeId as string,",
+				"          RutaHistoricaId as string,",
+				"          VehiculoId as string,",
+				"          FechaServicio as date,",
+				"          HoraProgramada as timestamp,",
+				"          HoraSalida as timestamp,",
+				"          HoraLlegada as timestamp,",
+				"          ValidacionesTarjeta as integer,",
+				"          KmRecorridos as decimal(8,1),",
+				"          EstadoViaje as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          ViajeId,",
+				"          RutaHistoricaId,",
+				"          VehiculoId,",
+				"          FechaServicio,",
+				"          HoraProgramada,",
+				"          HoraSalida,",
+				"          HoraLlegada,",
+				"          ValidacionesTarjeta,",
+				"          KmRecorridos,",
+				"          EstadoViaje",
+				"     )) ~> sink1"
 			]
 		}
 	}
